@@ -79,13 +79,17 @@ jobs:
 
       - uses: fregante/setup-git-user@v2
       - name: Create release assets branch
-        run: git checkout --orphan release && git add release/ -f && git commit -m "release" && git push -f --set-upstream origin release
+        run: git checkout --orphan release && git rm --cached * && git add release/ -f && git status && git commit -m "release" && git push -f --set-upstream origin release
 
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            "release/**/*"
+            "release/a.js"
+            "release/a.html"
+            "release/a/a.js"
+            "release/a/a.html"
+            "release/**/*.*"
             "**/release/*"
             "**/release/**
