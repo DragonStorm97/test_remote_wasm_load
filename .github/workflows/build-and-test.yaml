@@ -4,7 +4,6 @@ name: CMake on a single platform
 
 on:
   push:
-    branches: ["main"]
     tags:
       - "*"
   pull_request:
@@ -25,6 +24,10 @@ jobs:
     #   NOTE: the web preset probably doesn't have to be run for all of them...
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      discussions: write
 
     # TODO: get actions-cache-folder working
     steps:
