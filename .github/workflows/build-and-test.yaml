@@ -80,5 +80,4 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            **/release/*
-            **/release/**
+            release/**/**
