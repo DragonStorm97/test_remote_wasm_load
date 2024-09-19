@@ -78,3 +78,9 @@ jobs:
           files: |
             "release/*"
             "release/*/*
+
+      - name: What is in here bro?
+        run: ls -Rla
+
+      - name: Create release assets branch
+        run: git checkout --orphan release && git add release/ && git commit -m "release" && git push -f --set-upstream origin release
