@@ -71,25 +71,14 @@ jobs:
       # - name: Run CMake Workflow
       #   run: cmake --workflow --preset=${{env.BUILD_PRESET}}
 
-      - name: What is in here bro?
-        run: ls -la ./
-
-      - name: What is in release ?
-        run: ls -la ./release/**
-
       - uses: fregante/setup-git-user@v2
       - name: Create release assets branch
-        run: git checkout --orphan release && git rm --cached -r . && git add release/ -f && git status && git commit -m "release" && git push -f --set-upstream origin release
+        run: git checkout --orphan release-artifacts && git rm --cached -r . && git add release/ -f && git status && git commit -m "release" && git push -f --set-upstream origin release-artifacts
 
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            "release/a.js"
-            "release/a.html"
-            "release/a/a.js"
-            "release/a/a.html"
-            "release/**/*.*"
-            "**/release/*"
-            "**/release/**
+            **/release/*
+            **/release/**
