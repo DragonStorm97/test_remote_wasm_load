@@ -30,8 +30,8 @@ if(full_app_test_ENABLE_RAYLIB)
     add_custom_command(
       TARGET ${APP_NAME} POST_BUILD
       # COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${APP_NAME}>/${APP_NAME}.html ${PROJECT_SOURCE_DIR}/release/${APP_NAME}/${APP_NAME}.html
-      COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${APP_NAME}>/${APP_NAME}.js ${PROJECT_SOURCE_DIR}/release/${APP_NAME}/${APP_NAME}.js
-      COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${APP_NAME}>/${APP_NAME}.wasm ${PROJECT_SOURCE_DIR}/release/${APP_NAME}/${APP_NAME}.wasm
+      COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${APP_NAME}>/${APP_NAME}.js ${PROJECT_SOURCE_DIR}/release/raw/${APP_NAME}/${APP_NAME}.js
+      COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${APP_NAME}>/${APP_NAME}.wasm ${PROJECT_SOURCE_DIR}/release/raw/${APP_NAME}/${APP_NAME}.wasm
       COMMENT "Release ${APP_NAME}/${APP_NAME}.html, ${APP_NAME}.js, and ${APP_NAME}.wasm"
       DEPENDS ${APP_NAME})
   endif()
@@ -61,7 +61,8 @@ target_compile_options(${APP_NAME} PRIVATE ${SANITIZER_FLAGS} ${DEFAULT_COMPILER
 
 add_custom_command(
   TARGET ${APP_NAME} POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${APP_NAME}> ${PROJECT_SOURCE_DIR}/release/${APP_NAME}/$<TARGET_FILE_NAME:${APP_NAME}>
+  COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${APP_NAME}> ${PROJECT_SOURCE_DIR}/release/raw/${APP_NAME}/$<TARGET_FILE_NAME:${APP_NAME}>
+  COMMAND ${CMAKE_COMMAND} -E tar "cfv" "${PROJECT_SOURCE_DIR}/release/${APP_NAME}.zip" --format=zip  -- ${PROJECT_SOURCE_DIR}/release/raw/${APP_NAME}/
   COMMENT "Release ${APP_NAME}/${APP_NAME}"
   DEPENDS ${APP_NAME})
 
