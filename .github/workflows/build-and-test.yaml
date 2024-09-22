@@ -84,6 +84,10 @@ jobs:
           git checkout -b release-artifacts-latest &&
           git push -f --set-upstream origin release-artifacts-latest
 
+      - name: Pack raw files
+        if: startsWith(github.ref, 'refs/tags/')
+        run: find release/raw/*/ -maxdepth 0 -type d -exec sh -c 'cd "{}" && zip -r "../../$(basename "{}").zip" ./*' \;
+
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
